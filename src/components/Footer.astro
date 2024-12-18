@@ -1,0 +1,54 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-primary text-secondary/80 py-12">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+			<div>
+				<h3 class="text-xl font-playfair mb-4">Contact</h3>
+				<p>Email: contact@albertodolfi.com</p>
+				<p>Tel: +1 234 567 890</p>
+			</div>
+			<div>
+				<h3 class="text-xl font-playfair mb-4">Follow</h3>
+				<div class="flex space-x-4">
+					<a
+						href="#"
+						class="hover:text-secondary transition-colors duration-300"
+						>Instagram</a
+					>
+					<a
+						href="#"
+						class="hover:text-secondary transition-colors duration-300"
+						>YouTube</a
+					>
+					<a
+						href="#"
+						class="hover:text-secondary transition-colors duration-300"
+						>Facebook</a
+					>
+				</div>
+			</div>
+			<div>
+				<h3 class="text-xl font-playfair mb-4">Newsletter</h3>
+				<form class="flex">
+					<input
+						type="email"
+						placeholder="Your email"
+						class="bg-secondary/10 px-4 py-2 rounded-l focus:outline-none"
+					/>
+					<button
+						type="submit"
+						class="bg-accent px-4 py-2 rounded-r hover:bg-accent/80 transition-colors duration-300"
+					>
+						Subscribe
+					</button>
+				</form>
+			</div>
+		</div>
+		<div class="mt-12 text-center">
+			<p>&copy; {currentYear} Alberto Dolfi. All rights reserved.</p>
+		</div>
+	</div>
+</footer>

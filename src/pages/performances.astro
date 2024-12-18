@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import Calendar from "../components/performances/Calendar.svelte";
+import UpcomingEvents from "../components/performances/UpcomingEvents.astro";
+
+const events = [
+	{
+		title: "Piano Recital: Romantic Masterworks",
+		date: "2024-06-15",
+		time: "19:30",
+		venue: "Carnegie Hall",
+		location: "New York, NY",
+		program: [
+			'Beethoven: Sonata No. 23 "Appassionata"',
+			"Chopin: Selected Nocturnes",
+			"Liszt: Hungarian Rhapsody No. 2",
+		],
+		ticketUrl: "https://example.com/tickets",
+		image: "/images/performances/carnegie.jpg",
+	},
+	{
+		title: "Symphony Orchestra Concert",
+		date: "2024-07-02",
+		time: "20:00",
+		venue: "Royal Albert Hall",
+		location: "London, UK",
+		program: [
+			'Dolfi: Symphony No. 1 "Reflections"',
+			"Brahms: Piano Concerto No. 2",
+		],
+		ticketUrl: "https://example.com/tickets-london",
+		image: "/images/performances/royal-albert.jpg",
+	},
+];
+---
+
+<Layout title="Performances - Alberto Dolfi">
+	<PageHeader
+		title="Performances"
+		subtitle="Concert schedule and upcoming events"
+		backgroundImage="/images/performances-header.jpg"
+	/>
+
+	<Section>
+		<div class="max-w-4xl mx-auto mb-16">
+			<Calendar client:load events={events} />
+		</div>
+	</Section>
+
+	<Section title="Upcoming Performances" variant="alternate">
+		<UpcomingEvents events={events} />
+	</Section>
+</Layout>

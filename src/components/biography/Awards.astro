@@ -1,0 +1,31 @@
+---
+const awards = [
+	{
+		title: "Grammy Award",
+		category: "Best Classical Composition",
+		year: "2022",
+	},
+	{
+		title: "ECHO Klassik",
+		category: "Composer of the Year",
+		year: "2021",
+	},
+	{
+		title: "Pulitzer Prize",
+		category: "Music Composition",
+		year: "2019",
+	},
+];
+---
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+	{
+		awards.map((award) => (
+			<div class="bg-secondary/5 p-6 rounded-lg">
+				<h3 class="text-xl font-playfair mb-2">{award.title}</h3>
+				<p class="text-secondary/60 text-sm mb-1">{award.category}</p>
+				<p class="text-accent">{award.year}</p>
+			</div>
+		))
+	}
+</div>

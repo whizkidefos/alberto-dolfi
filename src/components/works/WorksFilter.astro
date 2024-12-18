@@ -1,0 +1,37 @@
+---
+interface Props {
+	categories: string[];
+	activeCategory: string;
+}
+
+const { categories, activeCategory } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-4 justify-center mb-12">
+	{
+		categories.map((category) => (
+			<button
+				class:list={[
+					"px-6 py-2 rounded-full transition-colors duration-300",
+					activeCategory === category
+						? "bg-accent text-secondary"
+						: "bg-secondary/5 hover:bg-secondary/10",
+				]}
+				data-category={category}
+			>
+				{category}
+			</button>
+		))
+	}
+</div>
+
+<script>
+	const buttons = document.querySelectorAll("[data-category]");
+	buttons.forEach((button) => {
+		button.addEventListener("click", () => {
+			const category = button.getAttribute("data-category");
+			window.location.search =
+				category === "All" ? "" : `?category=${category}`;
+		});
+	});
+</script>

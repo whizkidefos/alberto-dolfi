@@ -1,0 +1,25 @@
+---
+import EventCard from "./EventCard.astro";
+
+interface Props {
+	events: Array<{
+		title: string;
+		date: string;
+		time: string;
+		venue: string;
+		location: string;
+		program: string[];
+		ticketUrl?: string;
+		image: string;
+	}>;
+}
+
+const { events } = Astro.props;
+const sortedEvents = [...events].sort(
+	(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+);
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+	{sortedEvents.map((event) => <EventCard event={event} />)}
+</div>

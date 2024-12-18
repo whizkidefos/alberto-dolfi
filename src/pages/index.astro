@@ -1,11 +1,30 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Alberto Dolfi - Composer, Pianist, and Lecturer">
+	<Hero />
+
+	<section class="py-20 px-4">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl md:text-5xl font-playfair mb-12 text-center">
+				Latest Works
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<!-- Latest works will be dynamically loaded here -->
+			</div>
+		</div>
+	</section>
+
+	<section class="py-20 px-4 bg-secondary text-primary">
+		<div class="max-w-7xl mx-auto">
+			<h2 class="text-4xl md:text-5xl font-playfair mb-12 text-center">
+				Upcoming Performances
+			</h2>
+			<div class="space-y-8">
+				<!-- Upcoming performances will be dynamically loaded here -->
+			</div>
+		</div>
+	</section>
 </Layout>

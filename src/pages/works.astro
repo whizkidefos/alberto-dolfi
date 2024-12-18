@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import WorksFilter from "../components/works/WorksFilter.astro";
+import WorkCard from "../components/works/WorkCard.astro";
+import MusicPlayer from "../components/player/MusicPlayer.svelte";
+
+const categories = ["All", "Orchestral", "Chamber", "Piano", "Vocal"];
+const activeCategory = Astro.url.searchParams.get("category") || "All";
+
+const works = [
+	{
+		title: 'Symphony No. 1 "Reflections"',
+		year: "2023",
+		category: "Orchestral",
+		description:
+			"A contemporary symphony exploring themes of nature and technology.",
+		coverImage: "/images/works/symphony-1.jpg",
+		audioPreview: "/audio/symphony-1-preview.mp3",
+		scoreUrl: "/scores/symphony-1.pdf",
+	},
+	{
+		title: "String Quartet No. 3",
+		year: "2022",
+		category: "Chamber",
+		description: "An intimate exploration of post-minimalist techniques.",
+		coverImage: "/images/works/quartet-3.jpg",
+		audioPreview: "/audio/quartet-3-preview.mp3",
+		scoreUrl: "/scores/quartet-3.pdf",
+	},
+	// Add more works here
+];
+
+const filteredWorks =
+	activeCategory === "All"
+		? works
+		: works.filter((work) => work.category === activeCategory);
+---
+
+<Layout title="Works - Alberto Dolfi">
+	<PageHeader
+		title="Musical Works"
+		subtitle="A collection of compositions across various genres and ensembles"
+		backgroundImage="/images/works-header.jpg"
+	/>
+
+	<Section>
+		<WorksFilter categories={categories} activeCategory={activeCategory} />
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{filteredWorks.map((work) => <WorkCard work={work} />)}
+		</div>
+	</Section>
+
+	<MusicPlayer client:load />
+</Layout>
+
+<script>
+	// Handle audio preview clicks
+	document.querySelectorAll("[data-audio-preview]").forEach((button) => {
+		button.addEventListener("click", (e) => {
+			const audioUrl = (e.currentTarget as HTMLElement).getAttribute(
+				"data-audio-preview"
+			);
+			const title =
+				(e.currentTarget as HTMLElement)
+					.closest(".work-card")
+					?.querySelector("h3")?.textContent || "";
+
+			// Dispatch custom event to be handled by the MusicPlayer component
+			window.dispatchEvent(
+				new CustomEvent("play-audio", {
+					detail: { src: audioUrl, title },
+				})
+			);
+		});
+	});
+</script>

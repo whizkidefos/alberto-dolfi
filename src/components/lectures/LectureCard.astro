@@ -1,0 +1,65 @@
+---
+interface Props {
+	lecture: {
+		title: string;
+		date: string;
+		description: string;
+		videoUrl: string;
+		thumbnail: string;
+		topics: string[];
+		duration: string;
+	};
+}
+
+const { lecture } = Astro.props;
+---
+
+<div class="bg-secondary/5 rounded-lg overflow-hidden">
+	<div class="aspect-w-16 aspect-h-9 relative group">
+		<img
+			src={lecture.thumbnail}
+			alt={lecture.title}
+			class="w-full h-full object-cover"
+		/>
+		<div
+			class="absolute inset-0 bg-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+		>
+			<a
+				href={lecture.videoUrl}
+				class="bg-accent px-6 py-3 rounded-full hover:bg-accent/80 transition-colors duration-300 flex items-center gap-2"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+					></path>
+				</svg>
+				Watch Lecture
+			</a>
+		</div>
+	</div>
+	<div class="p-6">
+		<div class="flex justify-between items-start mb-4">
+			<h3 class="text-xl font-playfair">{lecture.title}</h3>
+			<span class="text-accent">{lecture.duration}</span>
+		</div>
+		<p class="text-secondary/60 mb-4">{lecture.description}</p>
+		<div class="flex flex-wrap gap-2">
+			{
+				lecture.topics.map((topic) => (
+					<span class="bg-secondary/10 px-3 py-1 rounded-full text-sm">
+						{topic}
+					</span>
+				))
+			}
+		</div>
+	</div>
+</div>

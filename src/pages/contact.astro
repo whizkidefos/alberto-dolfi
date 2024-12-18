@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import ContactForm from "../components/contact/ContactForm.svelte";
+
+const contactInfo = {
+	email: "contact@albertodolfi.com",
+	phone: "+1 234 567 890",
+	address: "123 Music Avenue, New York, NY 10001",
+	socialMedia: {
+		instagram: "https://instagram.com/albertodolfi",
+		facebook: "https://facebook.com/albertodolfi",
+		youtube: "https://youtube.com/albertodolfi",
+	},
+};
+---
+
+<Layout title="Contact - Alberto Dolfi">
+	<PageHeader
+		title="Contact"
+		subtitle="Get in touch for collaborations, performances, and inquiries"
+		backgroundImage="/images/contact-header.jpg"
+	/>
+
+	<Section>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
+			<div>
+				<h2 class="text-3xl font-playfair mb-6">Get in Touch</h2>
+				<div class="space-y-4 text-secondary/80">
+					<p>
+						For booking inquiries, collaborations, or any questions, please
+						don't hesitate to reach out. I look forward to hearing from you.
+					</p>
+					<div class="space-y-2">
+						<p>
+							<strong class="text-secondary">Email:</strong>
+							<a
+								href={`mailto:${contactInfo.email}`}
+								class="text-accent hover:text-accent/80"
+							>
+								{contactInfo.email}
+							</a>
+						</p>
+						<p>
+							<strong class="text-secondary">Phone:</strong>
+							<a
+								href={`tel:${contactInfo.phone}`}
+								class="text-accent hover:text-accent/80"
+							>
+								{contactInfo.phone}
+							</a>
+						</p>
+						<p>
+							<strong class="text-secondary">Address:</strong>
+							<span class="block mt-1">{contactInfo.address}</span>
+						</p>
+					</div>
+					<div class="pt-6">
+						<h3 class="text-xl font-playfair mb-4">Follow Me</h3>
+						<div class="flex space-x-4">
+							<a
+								href={contactInfo.socialMedia.instagram}
+								class="text-secondary/60 hover:text-accent transition-colors duration-300"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Instagram
+							</a>
+							<a
+								href={contactInfo.socialMedia.facebook}
+								class="text-secondary/60 hover:text-accent transition-colors duration-300"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Facebook
+							</a>
+							<a
+								href={contactInfo.socialMedia.youtube}
+								class="text-secondary/60 hover:text-accent transition-colors duration-300"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								YouTube
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<ContactForm client:load />
+			</div>
+		</div>
+	</Section>
+</Layout>

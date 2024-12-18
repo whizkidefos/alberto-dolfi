@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import Section from "../components/ui/Section.astro";
+import Timeline from "../components/biography/Timeline.astro";
+import Awards from "../components/biography/Awards.astro";
+---
+
+<Layout title="Biography - Alberto Dolfi">
+	<PageHeader
+		title="Biography"
+		subtitle="A journey through music and composition"
+		backgroundImage="/images/biography-header.jpg"
+	/>
+
+	<Section>
+		<div class="prose prose-invert mx-auto">
+			<p class="text-xl leading-relaxed mb-6">
+				Alberto Dolfi is an internationally acclaimed composer and pianist,
+				known for his innovative approach to contemporary classical music and
+				his ability to bridge traditional and modern compositional techniques.
+			</p>
+			<p class="mb-6">
+				Born in Florence, Italy, Dolfi began his musical journey at the age of
+				five. His early exposure to both classical masters and contemporary
+				composers shaped his unique musical perspective, leading to a
+				distinctive compositional style that combines historical awareness with
+				modern innovation.
+			</p>
+			<p>
+				Today, his works are performed by leading orchestras and ensembles
+				worldwide, while his lectures and masterclasses continue to inspire the
+				next generation of musicians and composers.
+			</p>
+		</div>
+	</Section>
+
+	<Section title="Career Milestones" variant="alternate">
+		<Timeline />
+	</Section>
+
+	<Section title="Awards & Recognition">
+		<Awards />
+	</Section>
+</Layout>
