@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { fade } from "svelte/transition";
 
 	export let events: Array<{
 		date: string;
@@ -9,21 +8,15 @@
 	}>;
 
 	let currentDate = new Date();
-	let currentMonth: number;
-	let currentYear: number;
 	let calendar: Array<Array<{ date: Date; events: typeof events }>>;
 
 	$: {
-		currentMonth = currentDate.getMonth();
-		currentYear = currentDate.getFullYear();
-		calendar = generateCalendar(currentMonth, currentYear, events);
+		const month = currentDate.getMonth();
+		const year = currentDate.getFullYear();
+		calendar = generateCalendar(month, year);
 	}
 
-	function generateCalendar(
-		month: number,
-		year: number,
-		events: typeof events
-	) {
+	function generateCalendar(month: number, year: number) {
 		const firstDay = new Date(year, month, 1);
 		const lastDay = new Date(year, month + 1, 0);
 		const startDate = new Date(firstDay);
@@ -55,16 +48,6 @@
 		return weeks;
 	}
 
-	function previousMonth() {
-		currentDate.setMonth(currentDate.getMonth() - 1);
-		currentDate = new Date(currentDate);
-	}
-
-	function nextMonth() {
-		currentDate.setMonth(currentDate.getMonth() + 1);
-		currentDate = new Date(currentDate);
-	}
-
 	const monthNames = [
 		"January",
 		"February",
@@ -79,6 +62,16 @@
 		"November",
 		"December",
 	];
+
+	function previousMonth() {
+		currentDate.setMonth(currentDate.getMonth() - 1);
+		currentDate = new Date(currentDate);
+	}
+
+	function nextMonth() {
+		currentDate.setMonth(currentDate.getMonth() + 1);
+		currentDate = new Date(currentDate);
+	}
 </script>
 
 <div class="bg-secondary/5 rounded-lg p-6">
@@ -86,6 +79,7 @@
 		<button
 			class="p-2 hover:bg-secondary/10 rounded-full transition-colors duration-300"
 			on:click={previousMonth}
+			aria-label="Previous month"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -104,13 +98,14 @@
 		</button>
 
 		<h2 class="text-2xl font-playfair">
-			{monthNames[currentMonth]}
-			{currentYear}
+			{monthNames[currentDate.getMonth()]}
+			{currentDate.getFullYear()}
 		</h2>
 
 		<button
 			class="p-2 hover:bg-secondary/10 rounded-full transition-colors duration-300"
 			on:click={nextMonth}
+			aria-label="Next month"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -142,14 +137,13 @@
 			{#each week as { date, events }}
 				<div
 					class="p-2 min-h-[80px] bg-primary relative group hover:bg-secondary/5 transition-colors duration-300"
-					class:opacity-50={date.getMonth() !== currentMonth}
+					class:opacity-50={date.getMonth() !== currentDate.getMonth()}
 				>
 					<span class="text-sm">{date.getDate()}</span>
 
 					{#if events.length > 0}
 						<div
 							class="absolute bottom-1 left-1 right-1 bg-accent/20 rounded p-1 text-xs"
-							transition:fade
 						>
 							{events.length} event{events.length > 1 ? "s" : ""}
 						</div>

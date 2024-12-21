@@ -1,0 +1,58 @@
+---
+import WorkCard from "../works/WorkCard.astro";
+
+const latestWorks = [
+	{
+		title: "Nocturne in B-flat minor",
+		year: "2024",
+		category: "Piano",
+		description:
+			"A contemporary take on the nocturne form, exploring modern harmonies while maintaining the traditional essence.",
+		coverImage:
+			"https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80",
+		audioPreview: "/audio/nocturne-preview.mp3",
+		scoreUrl: "/scores/nocturne.pdf",
+	},
+	{
+		title: "String Quartet No. 4 'Elements'",
+		year: "2023",
+		category: "Chamber",
+		description:
+			"A four-movement work representing earth, water, air, and fire through various string techniques.",
+		coverImage:
+			"https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&q=80",
+		audioPreview: "/audio/quartet-preview.mp3",
+		scoreUrl: "/scores/quartet.pdf",
+	},
+	{
+		title: "Piano Concerto No. 2",
+		year: "2023",
+		category: "Orchestral",
+		description:
+			"A bold exploration of piano and orchestra interaction, featuring innovative rhythmic structures.",
+		coverImage:
+			"https://images.unsplash.com/photo-1519682577862-22b62b24e493?auto=format&fit=crop&q=80",
+		audioPreview: "/audio/concerto-preview.mp3",
+		scoreUrl: "/scores/concerto.pdf",
+	},
+];
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+	{
+		latestWorks.map((work, index) => (
+			<div class="work-card" data-index={index}>
+				<WorkCard work={work} />
+			</div>
+		))
+	}
+</div>
+
+<script>
+	import { workCardAnimation } from "../../utils/animations";
+
+	const workCards = document.querySelectorAll(".work-card");
+	workCards.forEach((card, index) => {
+		workCardAnimation(card);
+	});
+</script>

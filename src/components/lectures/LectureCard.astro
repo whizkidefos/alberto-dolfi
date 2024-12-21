@@ -1,4 +1,6 @@
 ---
+import VideoLightbox from "./VideoLightbox.svelte";
+
 interface Props {
 	lecture: {
 		title: string;
@@ -24,9 +26,11 @@ const { lecture } = Astro.props;
 		<div
 			class="absolute inset-0 bg-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
 		>
-			<a
-				href={lecture.videoUrl}
+			<button
 				class="bg-accent px-6 py-3 rounded-full hover:bg-accent/80 transition-colors duration-300 flex items-center gap-2"
+				data-video-url={lecture.videoUrl}
+				data-video-title={lecture.title}
+				aria-label={`Watch ${lecture.title}`}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +47,7 @@ const { lecture } = Astro.props;
 					></path>
 				</svg>
 				Watch Lecture
-			</a>
+			</button>
 		</div>
 	</div>
 	<div class="p-6">
@@ -63,3 +67,50 @@ const { lecture } = Astro.props;
 		</div>
 	</div>
 </div>
+
+<script>
+	let activeLightbox: HTMLElement | null = null;
+
+	document.addEventListener("click", (e) => {
+		const target = e.target as HTMLElement;
+		const button = target.closest("[data-video-url]");
+
+		if (button instanceof HTMLElement) {
+			const videoUrl = button.dataset.videoUrl;
+			const videoTitle = button.dataset.videoTitle;
+
+			if (videoUrl && videoTitle) {
+				const lightbox = document.createElement("div");
+				lightbox.innerHTML = `<video-lightbox data-url="${videoUrl}" data-title="${videoTitle}"></video-lightbox>`;
+				document.body.appendChild(lightbox);
+				activeLightbox = lightbox;
+			}
+		}
+	});
+
+	class VideoLightbox extends HTMLElement {
+		constructor() {
+			super();
+			const url = this.dataset.url;
+			const title = this.dataset.title;
+
+			if (url && title) {
+				const component = new VideoLightbox({
+					target: this,
+					props: {
+						videoUrl: url,
+						title: title,
+						onClose: () => {
+							if (activeLightbox) {
+								activeLightbox.remove();
+								activeLightbox = null;
+							}
+						},
+					},
+				});
+			}
+		}
+	}
+
+	customElements.define("video-lightbox", VideoLightbox);
+</script>

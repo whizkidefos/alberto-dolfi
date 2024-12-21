@@ -1,0 +1,93 @@
+---
+import { formatDate } from "../../utils/dates";
+
+const performances = [
+	{
+		title: "Piano Recital: Modern Reflections",
+		date: "2024-05-20",
+		time: "20:00",
+		venue: "Wigmore Hall",
+		location: "London, UK",
+		program: [
+			"Nocturne in B-flat minor",
+			"Sonata No. 3 'Shadows'",
+			"Études Book I",
+		],
+		image:
+			"https://images.unsplash.com/photo-1519682577862-22b62b24e493?auto=format&fit=crop&q=80",
+		ticketUrl: "https://example.com/tickets",
+		featured: true,
+	},
+	{
+		title: "Orchestra Premiere: Piano Concerto No. 2",
+		date: "2024-06-15",
+		time: "19:30",
+		venue: "Konzerthaus",
+		location: "Berlin, Germany",
+		program: ["Piano Concerto No. 2", "Symphony No. 1 'Reflections'"],
+		image:
+			"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80",
+		ticketUrl: "https://example.com/tickets-berlin",
+	},
+	{
+		title: "Chamber Music Evening",
+		date: "2024-07-10",
+		time: "20:00",
+		venue: "Musikverein",
+		location: "Vienna, Austria",
+		program: ["String Quartet No. 4 'Elements'", "Piano Quintet in G minor"],
+		image:
+			"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80",
+		ticketUrl: "https://example.com/tickets-vienna",
+	},
+];
+
+const upcomingPerformances = performances
+	.filter((perf) => new Date(perf.date) > new Date())
+	.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+	.slice(0, 3);
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+	{
+		upcomingPerformances.map((performance) => (
+			<div class="bg-secondary/5 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300">
+				<div class="aspect-w-16 aspect-h-9">
+					<img
+						src={performance.image}
+						alt={performance.venue}
+						class="w-full h-full object-cover"
+					/>
+				</div>
+				<div class="p-6">
+					<div class="mb-4">
+						<h3 class="text-xl font-playfair mb-2">{performance.title}</h3>
+						<p class="text-accent">
+							{formatDate(performance.date)} at {performance.time}
+						</p>
+					</div>
+					<div class="mb-4">
+						<p class="font-medium">{performance.venue}</p>
+						<p class="text-secondary/60">{performance.location}</p>
+					</div>
+					<div>
+						<h4 class="text-sm font-medium mb-2">Program:</h4>
+						<ul class="text-secondary/60 space-y-1 mb-4">
+							{performance.program.map((piece) => (
+								<li>{piece}</li>
+							))}
+						</ul>
+						<a
+							href={performance.ticketUrl}
+							class="inline-block bg-accent px-6 py-2 rounded-full hover:bg-accent/80 transition-colors duration-300"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Get Tickets
+						</a>
+					</div>
+				</div>
+			</div>
+		))
+	}
+</div>

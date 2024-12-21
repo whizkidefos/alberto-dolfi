@@ -1,15 +1,20 @@
 ---
+interface Props {
+	backgroundImage: string;
+}
 
+const { backgroundImage } = Astro.props;
 ---
 
 <section
 	class="relative h-screen flex items-center justify-center overflow-hidden"
 >
 	<div class="absolute inset-0 z-0">
+		<div class="absolute inset-0 bg-black/70"></div>
 		<img
-			src="/hero-bg.jpg"
+			src={backgroundImage}
 			alt="Piano performance"
-			class="w-full h-full object-cover opacity-50"
+			class="w-full h-full object-cover"
 		/>
 	</div>
 	<div class="relative z-10 text-center px-4">

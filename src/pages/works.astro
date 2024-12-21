@@ -16,20 +16,31 @@ const works = [
 		category: "Orchestral",
 		description:
 			"A contemporary symphony exploring themes of nature and technology.",
-		coverImage: "/images/works/symphony-1.jpg",
-		audioPreview: "/audio/symphony-1-preview.mp3",
-		scoreUrl: "/scores/symphony-1.pdf",
+		coverImage:
+			"https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80",
+		audioPreview: "/audio/symphony-preview.mp3",
+		scoreUrl: "/scores/symphony.pdf",
 	},
 	{
 		title: "String Quartet No. 3",
 		year: "2022",
 		category: "Chamber",
 		description: "An intimate exploration of post-minimalist techniques.",
-		coverImage: "/images/works/quartet-3.jpg",
-		audioPreview: "/audio/quartet-3-preview.mp3",
-		scoreUrl: "/scores/quartet-3.pdf",
+		coverImage:
+			"https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&q=80",
+		audioPreview: "/audio/quartet-preview.mp3",
+		scoreUrl: "/scores/quartet.pdf",
 	},
-	// Add more works here
+	{
+		title: "Piano Sonata No. 2",
+		year: "2022",
+		category: "Piano",
+		description: "A modern approach to the classical sonata form.",
+		coverImage:
+			"https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80",
+		audioPreview: "/audio/nocturne-preview.mp3",
+		scoreUrl: "/scores/nocturne.pdf",
+	},
 ];
 
 const filteredWorks =
@@ -42,7 +53,7 @@ const filteredWorks =
 	<PageHeader
 		title="Musical Works"
 		subtitle="A collection of compositions across various genres and ensembles"
-		backgroundImage="/images/works-header.jpg"
+		backgroundImage="https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&q=80"
 	/>
 
 	<Section>
@@ -55,25 +66,3 @@ const filteredWorks =
 
 	<MusicPlayer client:load />
 </Layout>
-
-<script>
-	// Handle audio preview clicks
-	document.querySelectorAll("[data-audio-preview]").forEach((button) => {
-		button.addEventListener("click", (e) => {
-			const audioUrl = (e.currentTarget as HTMLElement).getAttribute(
-				"data-audio-preview"
-			);
-			const title =
-				(e.currentTarget as HTMLElement)
-					.closest(".work-card")
-					?.querySelector("h3")?.textContent || "";
-
-			// Dispatch custom event to be handled by the MusicPlayer component
-			window.dispatchEvent(
-				new CustomEvent("play-audio", {
-					detail: { src: audioUrl, title },
-				})
-			);
-		});
-	});
-</script>

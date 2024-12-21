@@ -1,0 +1,46 @@
+[Binary ZIP file containing the following structure:
+
+/audio/
+  - nocturne-preview.mp3
+  - quartet-preview.mp3
+  - concerto-preview.mp3
+  - symphony-preview.mp3
+
+/scores/
+  - nocturne.pdf
+  - quartet.pdf
+  - concerto.pdf
+  - symphony.pdf
+
+/images/
+  /hero/
+    - hero-bg.jpg
+    - biography-header.jpg
+    - works-header.jpg
+    - performances-header.jpg
+    - lectures-header.jpg
+    - contact-header.jpg
+  
+  /works/
+    - nocturne.jpg
+    - quartet.jpg
+    - concerto.jpg
+    - symphony.jpg
+  
+  /performances/
+    - wigmore.jpg
+    - konzerthaus.jpg
+    - carnegie.jpg
+    - royal-albert.jpg
+  
+  /lectures/
+    - composition.jpg
+    - piano-history.jpg
+    - masterclass-1.jpg
+    - masterclass-2.jpg
+
+/videos/
+  - lecture-preview-1.mp4
+  - lecture-preview-2.mp4
+  - masterclass-preview-1.mp4
+  - masterclass-preview-2.mp4]

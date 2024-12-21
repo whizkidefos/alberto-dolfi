@@ -1,30 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
+import Section from "../components/ui/Section.astro";
+import LatestWorks from "../components/home/LatestWorks.astro";
+import UpcomingPerformances from "../components/home/UpcomingPerformances.astro";
+
+const heroImage =
+	"https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80";
 ---
 
 <Layout title="Alberto Dolfi - Composer, Pianist, and Lecturer">
-	<Hero />
+	<Hero backgroundImage={heroImage} />
 
-	<section class="py-20 px-4">
-		<div class="max-w-7xl mx-auto">
-			<h2 class="text-4xl md:text-5xl font-playfair mb-12 text-center">
-				Latest Works
-			</h2>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-				<!-- Latest works will be dynamically loaded here -->
-			</div>
-		</div>
-	</section>
+	<Section title="Latest Works">
+		<LatestWorks />
+	</Section>
 
-	<section class="py-20 px-4 bg-secondary text-primary">
-		<div class="max-w-7xl mx-auto">
-			<h2 class="text-4xl md:text-5xl font-playfair mb-12 text-center">
-				Upcoming Performances
-			</h2>
-			<div class="space-y-8">
-				<!-- Upcoming performances will be dynamically loaded here -->
-			</div>
-		</div>
-	</section>
+	<Section title="Upcoming Performances" variant="alternate">
+		<UpcomingPerformances />
+	</Section>
 </Layout>
+
+<script>
+	import { heroAnimation } from "../utils/animations";
+
+	const heroSection = document.querySelector("section:first-of-type");
+	if (heroSection) {
+		heroAnimation(heroSection);
+	}
+</script>

@@ -10,8 +10,9 @@ const lectures = [
 		date: "2024-03-15",
 		description:
 			"An exploration of modern compositional methods and their application in today's musical landscape.",
-		videoUrl: "https://example.com/lecture-1",
-		thumbnail: "/images/lectures/composition.jpg",
+		videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+		thumbnail:
+			"https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&q=80",
 		topics: ["Composition", "Modern Music", "Techniques"],
 		duration: "1:15:00",
 	},
@@ -20,9 +21,54 @@ const lectures = [
 		date: "2024-02-28",
 		description:
 			"A journey through the history of piano composition from the Baroque era to contemporary times.",
-		videoUrl: "https://example.com/lecture-2",
-		thumbnail: "/images/lectures/piano-history.jpg",
+		videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+		thumbnail:
+			"https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80",
 		topics: ["Piano", "Music History", "Performance"],
+		duration: "1:30:00",
+	},
+	{
+		title: "Advanced Piano Masterclass",
+		date: "2024-01-15",
+		description:
+			"In-depth analysis and performance techniques for advanced pianists.",
+		videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+		thumbnail:
+			"https://images.unsplash.com/photo-1513883049090-d0b7439799bf?auto=format&fit=crop&q=80",
+		topics: ["Piano", "Performance", "Technique"],
+		duration: "2:00:00",
+	},
+	{
+		title: "Modern Orchestration Workshop",
+		date: "2024-01-10",
+		description:
+			"Learn advanced orchestration techniques for contemporary classical music.",
+		videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+		thumbnail:
+			"https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80",
+		topics: ["Orchestration", "Composition", "Workshop"],
+		duration: "1:45:00",
+	},
+	{
+		title: "Electronic Music Integration",
+		date: "2023-12-20",
+		description:
+			"Exploring the fusion of classical and electronic music elements.",
+		videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+		thumbnail:
+			"https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80",
+		topics: ["Electronic", "Modern Music", "Technology"],
+		duration: "1:20:00",
+	},
+	{
+		title: "Chamber Music Performance Practice",
+		date: "2023-12-05",
+		description:
+			"Essential techniques and approaches for chamber music performance.",
+		videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+		thumbnail:
+			"https://images.unsplash.com/photo-1580743744062-4522d09fa8c9?auto=format&fit=crop&q=80",
+		topics: ["Chamber Music", "Performance", "Ensemble"],
 		duration: "1:30:00",
 	},
 ];
@@ -32,11 +78,11 @@ const lectures = [
 	<PageHeader
 		title="Lectures & Masterclasses"
 		subtitle="Educational content and musical insights"
-		backgroundImage="/images/lectures-header.jpg"
+		backgroundImage="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80"
 	/>
 
 	<Section>
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{lectures.map((lecture) => <LectureCard lecture={lecture} />)}
 		</div>
 	</Section>

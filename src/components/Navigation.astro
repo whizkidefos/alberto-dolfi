@@ -1,4 +1,6 @@
 ---
+import MobileMenu from "./navigation/MobileMenu.svelte";
+
 const navItems = [
 	{ name: "Home", path: "/" },
 	{ name: "Biography", path: "/biography" },
@@ -28,6 +30,9 @@ const navItems = [
 						))
 					}
 				</div>
+			</div>
+			<div class="md:hidden">
+				<MobileMenu client:load items={navItems} />
 			</div>
 		</div>
 	</div>

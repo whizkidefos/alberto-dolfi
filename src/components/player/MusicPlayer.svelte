@@ -73,6 +73,7 @@
 		<button
 			class="w-12 h-12 flex items-center justify-center rounded-full bg-accent hover:bg-accent/80 transition-colors duration-300"
 			on:click={togglePlay}
+			aria-label={isPlaying ? "Pause" : "Play"}
 		>
 			{#if isPlaying}
 				<svg
@@ -120,6 +121,11 @@
 				<div
 					class="flex-1 h-1 bg-secondary/20 rounded-full cursor-pointer"
 					on:click={handleProgressClick}
+					role="slider"
+					aria-label="Progress"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={progress}
 				>
 					<div
 						class="h-full bg-accent rounded-full"
@@ -137,6 +143,7 @@
 				fill="none"
 				viewBox="0 0 24 24"
 				stroke="currentColor"
+				aria-hidden="true"
 			>
 				<path
 					stroke-linecap="round"
@@ -153,6 +160,7 @@
 				value={volume}
 				on:input={handleVolumeChange}
 				class="w-24"
+				aria-label="Volume"
 			/>
 		</div>
 	</div>
