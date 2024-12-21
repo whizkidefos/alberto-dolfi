@@ -22,10 +22,10 @@ const heroImage =
 </Layout>
 
 <script>
-	import { heroAnimation } from "../utils/animations";
-
 	const heroSection = document.querySelector("section:first-of-type");
 	if (heroSection) {
-		heroAnimation(heroSection);
+		import('../utils/animations/hero.js').then(({ heroAnimation }) => {
+			heroAnimation(heroSection);
+		});
 	}
 </script>

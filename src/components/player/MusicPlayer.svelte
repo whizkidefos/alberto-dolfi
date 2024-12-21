@@ -119,13 +119,21 @@
 			<div class="flex items-center gap-2">
 				<span class="text-xs text-secondary/60">{formattedCurrentTime}</span>
 				<div
-					class="flex-1 h-1 bg-secondary/20 rounded-full cursor-pointer"
-					on:click={handleProgressClick}
 					role="slider"
-					aria-label="Progress"
+					tabindex="0"
+					aria-label="Audio progress"
 					aria-valuemin="0"
 					aria-valuemax="100"
-					aria-valuenow={progress}
+					aria-valuenow={currentTime}
+					class="flex-1 h-1 bg-secondary/20 rounded-full cursor-pointer"
+					on:click={handleProgressClick}
+					on:keydown={(e) => {
+						if (e.key === 'ArrowRight') {
+							currentTime = Math.min(currentTime + 5, duration);
+						} else if (e.key === 'ArrowLeft') {
+							currentTime = Math.max(currentTime - 5, 0);
+						}
+					}}
 				>
 					<div
 						class="h-full bg-accent rounded-full"

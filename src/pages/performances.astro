@@ -2,56 +2,69 @@
 import Layout from "../layouts/Layout.astro";
 import PageHeader from "../components/ui/PageHeader.astro";
 import Section from "../components/ui/Section.astro";
-import Calendar from "../components/performances/Calendar.svelte";
-import UpcomingEvents from "../components/performances/UpcomingEvents.astro";
+import PerformanceCard from "../components/performances/PerformanceCard.astro";
+import { performances } from "../data/performances";
 
-const events = [
-	{
-		title: "Piano Recital: Romantic Masterworks",
-		date: "2024-06-15",
-		time: "19:30",
-		venue: "Carnegie Hall",
-		location: "New York, NY",
-		program: [
-			'Beethoven: Sonata No. 23 "Appassionata"',
-			"Chopin: Selected Nocturnes",
-			"Liszt: Hungarian Rhapsody No. 2",
-		],
-		ticketUrl: "https://example.com/tickets",
-		image:
-			"https://images.unsplash.com/photo-1519682577862-22b62b24e493?auto=format&fit=crop&q=80",
-	},
-	{
-		title: "Symphony Orchestra Concert",
-		date: "2024-07-02",
-		time: "20:00",
-		venue: "Royal Albert Hall",
-		location: "London, UK",
-		program: [
-			'Dolfi: Symphony No. 1 "Reflections"',
-			"Brahms: Piano Concerto No. 2",
-		],
-		ticketUrl: "https://example.com/tickets-london",
-		image:
-			"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80",
-	},
-];
+const upcomingPerformances = performances
+  .filter((perf) => {
+    const perfDate = new Date(perf.date);
+    perfDate.setHours(0, 0, 0, 0);
+    const today = new Date("2024-12-21"); // Using provided current date
+    today.setHours(0, 0, 0, 0);
+    return perfDate >= today;
+  })
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+const pastPerformances = performances
+  .filter((perf) => {
+    const perfDate = new Date(perf.date);
+    perfDate.setHours(0, 0, 0, 0);
+    const today = new Date("2024-12-21"); // Using provided current date
+    today.setHours(0, 0, 0, 0);
+    return perfDate < today;
+  })
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
 
-<Layout title="Performances - Alberto Dolfi">
-	<PageHeader
-		title="Performances"
-		subtitle="Concert schedule and upcoming events"
-		backgroundImage="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80"
-	/>
+<Layout title="Performances | Alberto Dolfi">
+  <div class="pt-24">
+    <PageHeader
+      title="Performances"
+      subtitle="Join me for upcoming concerts and recitals around the world"
+    />
 
-	<Section>
-		<div class="max-w-4xl mx-auto mb-16">
-			<Calendar client:load events={events} />
-		</div>
-	</Section>
+    <Section>
+      <div class="space-y-16">
+        <!-- Upcoming Performances -->
+        <div class="space-y-8">
+          <h2 class="text-3xl font-playfair">Upcoming Performances</h2>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {upcomingPerformances.map((performance, index) => (
+              <PerformanceCard 
+                performance={performance}
+                featured={index === 0}
+              />
+            ))}
+          </div>
+          {upcomingPerformances.length === 0 && (
+            <div class="text-center py-12">
+              <p class="text-secondary/60">No upcoming performances scheduled.</p>
+            </div>
+          )}
+        </div>
 
-	<Section title="Upcoming Performances" variant="alternate">
-		<UpcomingEvents events={events} />
-	</Section>
+        <!-- Past Performances -->
+        {pastPerformances.length > 0 && (
+          <div class="space-y-8">
+            <h2 class="text-3xl font-playfair">Past Performances</h2>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {pastPerformances.map((performance) => (
+                <PerformanceCard performance={performance} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </Section>
+  </div>
 </Layout>

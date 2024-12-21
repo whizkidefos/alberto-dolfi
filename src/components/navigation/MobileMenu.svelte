@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { slide } from "svelte/transition";
+	import { fade, fly } from "svelte/transition";
 
 	export let items: Array<{ name: string; path: string }>;
 	let isOpen = false;
@@ -55,8 +55,8 @@
 
 {#if isOpen}
 	<div
-		class="fixed inset-0 top-20 bg-primary/95 backdrop-blur-lg z-50"
-		transition:slide={{ duration: 300 }}
+		class="fixed inset-0 top-20 bg-gray-900 z-50"
+		transition:fly={{ y: -500, duration: 300, opacity: 1 }}
 	>
 		<nav class="p-4">
 			<ul class="space-y-4">
@@ -64,7 +64,7 @@
 					<li>
 						<a
 							href={item.path}
-							class="block py-2 text-xl text-center text-secondary/80 hover:text-secondary transition-colors duration-300"
+							class="block py-2 text-xl text-center text-white/80 hover:text-white transition-all duration-300 transform hover:scale-105"
 							on:click={toggleMenu}
 						>
 							{item.name}

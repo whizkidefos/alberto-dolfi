@@ -1,0 +1,86 @@
+---
+interface Props {
+  performance: {
+    title: string;
+    date: string;
+    time: string;
+    venue: string;
+    location: string;
+    program: string[];
+    image: string;
+    ticketUrl?: string;
+  };
+  featured?: boolean;
+}
+
+const { performance, featured = false } = Astro.props;
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(date);
+}
+---
+
+<article class={`group relative overflow-hidden rounded-xl ${featured ? 'md:col-span-2' : ''}`}>
+  <!-- Image Container -->
+  <div class="relative aspect-[16/9] w-full overflow-hidden">
+    <img
+      src={performance.image}
+      alt={performance.title}
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+    <!-- Date Badge -->
+    <div class="mb-4 inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-sm backdrop-blur-sm">
+      <span class="mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </span>
+      {formatDate(performance.date)} at {performance.time}
+    </div>
+
+    <!-- Title and Location -->
+    <h3 class="mb-2 text-2xl font-bold font-playfair">{performance.title}</h3>
+    <div class="mb-4 flex items-center text-white/80">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      {performance.venue}, {performance.location}
+    </div>
+
+    <!-- Program Preview -->
+    <div class="mb-4">
+      <div class="line-clamp-2 text-sm text-white/70">
+        {performance.program.join(' • ')}
+      </div>
+    </div>
+
+    <!-- Ticket Button -->
+    {performance.ticketUrl && (
+      <a
+        href={performance.ticketUrl}
+        class="inline-flex items-center rounded-full bg-accent px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/80"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Get Tickets
+        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    )}
+  </div>
+</article>
