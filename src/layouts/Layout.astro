@@ -1,53 +1,125 @@
 ---
-import "@fontsource/playfair-display";
-import "@fontsource/inter";
-import Navigation from "../components/Navigation.astro";
-import Footer from "../components/Footer.astro";
+import { ViewTransitions } from 'astro:transitions';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import ThemeProvider from '../components/theme/ThemeProvider.svelte';
+import NoiseTexture from '../components/ui/NoiseTexture.astro';
 
 interface Props {
-	title: string;
+  title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { 
+  title, 
+  description = "Alberto Dolfi is a renowned pianist and composer, performing classical and contemporary music in prestigious venues worldwide."
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="description"
-			content="Alberto Dolfi - Composer, Pianist, and Lecturer"
-		/>
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>{title}</title>
-	</head>
-	<body class="bg-primary text-secondary">
-		<Navigation />
-		<main>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+
+    <!-- Preload fonts -->
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body class="relative min-h-screen bg-gradient-to-b from-white to-gray-50 text-gray-900 antialiased dark:from-gray-900 dark:to-black dark:text-white">
+    <!-- Background Pattern -->
+    <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-30 dark:opacity-20">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(29,78,216,0.15),transparent)]"></div>
+      <div class="absolute right-0 h-[600px] w-[600px] translate-x-1/2 bg-[radial-gradient(circle_400px_at_center,rgba(29,78,216,0.1),transparent)] dark:bg-[radial-gradient(circle_400px_at_center,rgba(59,130,246,0.1),transparent)]"></div>
+      <div class="absolute left-0 top-1/2 h-[600px] w-[600px] -translate-x-1/2 bg-[radial-gradient(circle_400px_at_center,rgba(29,78,216,0.1),transparent)] dark:bg-[radial-gradient(circle_400px_at_center,rgba(59,130,246,0.1),transparent)]"></div>
+    </div>
+
+    <!-- Noise Texture -->
+    <NoiseTexture />
+
+    <ThemeProvider client:load>
+      <div class="relative z-20">
+        <Header />
+        <main>
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
+
+    <style is:global>
+      @font-face {
+        font-family: 'Playfair Display';
+        src: url('/fonts/playfair-display-variable.woff2') format('woff2-variations');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      ::selection {
+        @apply bg-accent/20 text-accent;
+      }
+
+      .font-playfair {
+        font-family: 'Playfair Display', serif;
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        @apply w-2;
+      }
+
+      ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        @apply rounded-full bg-gray-300 dark:bg-gray-700;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400 dark:bg-gray-600;
+      }
+
+      /* Page transitions */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+
+      /* Fade transition */
+      .fade-enter {
+        opacity: 0;
+      }
+
+      .fade-enter-active {
+        opacity: 1;
+        transition: opacity 200ms ease-out;
+      }
+
+      .fade-exit {
+        opacity: 1;
+      }
+
+      .fade-exit-active {
+        opacity: 0;
+        transition: opacity 150ms ease-in;
+      }
+    </style>
+  </body>
 </html>
-
-<style is:global>
-	html {
-		scroll-behavior: smooth;
-	}
-
-	body {
-		font-family: "Inter", sans-serif;
-		overflow-x: hidden;
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-family: "Playfair Display", serif;
-	}
-</style>

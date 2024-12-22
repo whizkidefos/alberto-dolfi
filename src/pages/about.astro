@@ -1,0 +1,103 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/ui/Hero.astro";
+import Section from "../components/ui/Section.astro";
+import { awards } from "../data/awards.ts";
+import { education } from "../data/education.ts";
+---
+
+<Layout title="About | Alberto Dolfi">
+  <Hero
+    title="About"
+    subtitle="Learn more about my journey and achievements in music"
+    variant="clean"
+  />
+
+  <!-- Main Content -->
+  <div class="relative">
+    <!-- Background Pattern -->
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(29,78,216,0.15),transparent)]"></div>
+    </div>
+
+    <Section>
+      <div class="mx-auto grid max-w-7xl gap-12 px-4 pt-16 sm:px-6 lg:grid-cols-2 lg:px-8">
+        <!-- Left Column -->
+        <div class="space-y-12">
+          <!-- Biography -->
+          <div class="relative space-y-6">
+            <div class="absolute -left-4 top-0 h-full w-1 bg-gradient-to-b from-accent/50 to-blue-300/50"></div>
+            <h2 class="font-playfair text-3xl">Biography</h2>
+            <div class="prose prose-lg dark:prose-invert">
+              <p>
+                Alberto Dolfi is a renowned pianist and composer known for his innovative interpretations of classical repertoire and compelling original compositions. Born in Florence, Italy, he began his musical journey at the age of five and quickly demonstrated exceptional talent.
+              </p>
+              <p>
+                After completing his studies at the Conservatorio Luigi Cherubini, he continued his musical education at the Mozarteum in Salzburg and later at the Juilliard School in New York. His unique approach to classical music, combining traditional techniques with contemporary sensibilities, has earned him acclaim from critics and audiences worldwide.
+              </p>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div class="space-y-6">
+            <h2 class="font-playfair text-3xl">Education</h2>
+            <div class="space-y-8">
+              {education.map((item) => (
+                <div class="group relative flex gap-6">
+                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-2xl shadow-sm transition group-hover:scale-110">
+                    {item.icon}
+                  </div>
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-playfair text-xl">{item.institution}</h3>
+                      <span class="text-sm text-gray-600 dark:text-gray-400">
+                        {item.year}
+                      </span>
+                    </div>
+                    <p class="text-accent">{item.degree}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                      {item.location}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-12">
+          <!-- Awards -->
+          <div class="space-y-6">
+            <h2 class="font-playfair text-3xl">Awards & Recognition</h2>
+            <div class="grid gap-6">
+              {awards.map((item) => (
+                <div class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-white p-6 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg dark:from-gray-800/50 dark:to-gray-900/50">
+                  <div class="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-accent/10 transition-transform duration-300 group-hover:scale-150"></div>
+                  <svg
+                    class="absolute right-2 top-2 h-8 w-8 text-accent/50"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <Fragment set:html={item.icon} />
+                  </svg>
+                  <div class="space-y-2">
+                    <span class="text-sm text-accent">{item.year}</span>
+                    <h3 class="font-playfair text-xl font-medium">{item.award}</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Section>
+  </div>
+</Layout>

@@ -1,0 +1,119 @@
+---
+import ThemeToggle from "../theme/ThemeToggle.svelte";
+
+interface Props {
+  items: {
+    href: string;
+    label: string;
+  }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-50 hidden transform overflow-y-auto bg-white transition duration-300 ease-in-out dark:bg-gray-900"
+>
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-grid-gray-900/[0.02] bg-[size:80px_80px] dark:bg-grid-white/[0.01]"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-accent/[0.02] to-transparent dark:from-accent/[0.01]"></div>
+  </div>
+
+  <div class="flex min-h-screen flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-4">
+      <a href="/" class="text-xl font-semibold text-gray-900 dark:text-white">
+        Alberto Dolfi
+      </a>
+      <button
+        id="close-menu"
+        class="rounded-lg p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+      >
+        <span class="sr-only">Close menu</span>
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="flex-1 px-4 py-8">
+      <ul class="space-y-4">
+        {
+          items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="block rounded-lg px-4 py-2 text-lg font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Footer -->
+    <div class="border-t border-gray-200 px-4 py-4 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-gray-500 dark:text-gray-400">Theme</span>
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bg-grid-gray-900\/\[0\.02\] {
+    background-image: linear-gradient(currentColor 0.5px, transparent 0.5px),
+      linear-gradient(to right, currentColor 0.5px, transparent 0.5px);
+  }
+
+  .bg-grid-white\/\[0\.01\] {
+    background-image: linear-gradient(currentColor 0.5px, transparent 0.5px),
+      linear-gradient(to right, currentColor 0.5px, transparent 0.5px);
+  }
+</style>
+
+<script>
+  function setupMobileMenu() {
+    const mobileMenu = document.getElementById("mobile-menu");
+    const closeButton = document.getElementById("close-menu");
+    const menuButton = document.getElementById("menu-button");
+
+    function toggleMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.toggle("hidden");
+        document.body.classList.toggle("overflow-hidden");
+      }
+    }
+
+    menuButton?.addEventListener("click", toggleMenu);
+    closeButton?.addEventListener("click", toggleMenu);
+
+    // Close menu when clicking on a link
+    const menuLinks = mobileMenu?.querySelectorAll("a");
+    menuLinks?.forEach((link) => {
+      link.addEventListener("click", toggleMenu);
+    });
+  }
+
+  // Setup on initial load
+  setupMobileMenu();
+
+  // Setup when navigating between pages (for Astro view transitions)
+  document.addEventListener('astro:page-load', setupMobileMenu);
+</script>

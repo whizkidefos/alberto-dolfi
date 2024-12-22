@@ -1,8 +1,11 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import svelte from '@astrojs/svelte';
-import image from '@astrojs/image';
+import tailwind from "@astrojs/tailwind";
+import svelte from "@astrojs/svelte";
 
+// https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), svelte(), image()],
+  integrations: [tailwind(), svelte()],
+  experimental: {
+    viewTransitions: true
+  }
 });

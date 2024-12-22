@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Performance } from '../../data/performances';
+  import { theme } from '../../stores/theme';
 
   export let performances: Performance[];
   
@@ -66,10 +67,15 @@
       day: 'numeric'
     });
   }
+
+  function toggleTheme() {
+    theme.toggleTheme();
+    document.documentElement.classList.toggle('dark');
+  }
 </script>
 
 <div
-  class="relative overflow-hidden bg-black"
+  class="relative overflow-hidden bg-gray-900 dark:bg-black"
   on:mouseenter={stopAutoplay}
   on:mouseleave={startAutoplay}
 >
@@ -86,7 +92,7 @@
       class="absolute inset-0 transition-opacity duration-500"
       style="background-image: url({currentPerformance.image}); background-size: cover; background-position: center;"
     >
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-black/20" />
+      <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 dark:from-black/90 to-gray-900/20 dark:to-black/20" />
     </div>
 
     <!-- Content -->
@@ -148,25 +154,52 @@
           {/each}
         </div>
 
-        <!-- Arrows -->
-        <div class="flex space-x-4">
+        <div class="flex items-center space-x-4">
+          <!-- Arrows -->
+          <div class="flex space-x-4">
+            <button
+              class="rounded-full p-2 text-white/60 transition-colors hover:text-white"
+              on:click={prevSlide}
+              aria-label="Previous slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <button
+              class="rounded-full p-2 text-white/60 transition-colors hover:text-white"
+              on:click={nextSlide}
+              aria-label="Next slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Theme Toggle -->
           <button
             class="rounded-full p-2 text-white/60 transition-colors hover:text-white"
-            on:click={prevSlide}
-            aria-label="Previous slide"
+            on:click={toggleTheme}
+            aria-label="Toggle theme"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-          </button>
-          <button
-            class="rounded-full p-2 text-white/60 transition-colors hover:text-white"
-            on:click={nextSlide}
-            aria-label="Next slide"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+            {#if $theme === 'dark'}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+            {:else}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            {/if}
           </button>
         </div>
       </div>
